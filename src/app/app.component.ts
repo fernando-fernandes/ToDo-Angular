@@ -11,6 +11,7 @@ export class AppComponent {
   public todos: any[] = []
   public title: string = 'Minhas tarefas'
   public form: FormGroup
+  public mode = 'list'
 
   constructor( private fb: FormBuilder) {
 
@@ -64,11 +65,22 @@ export class AppComponent {
   save(){
     const data = JSON.stringify(this.todos);
     localStorage.setItem('todos', data)
+
+    this.mode = 'list'
   }
 
   load() {
-    const data = localStorage.getItem('todos')!
-    this.todos = JSON.parse(data)
+    const data = localStorage.getItem('todos')
+    if(data) {
+
+      this.todos = JSON.parse(data)
+    }else{
+      this.todos= []
+    }
+  }
+
+  changeMode(mode: string) {
+    this.mode = mode
   }
 
 }
